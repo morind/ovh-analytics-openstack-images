@@ -8,7 +8,7 @@
 
 - name: Apply the Ambari role to the image
   hosts: hadoop-cluster
-  any_errors_fatal: yes
+  any_errors_fatal: true
   become: yes
   pre_tasks:
     - name: Include Analytics vars
@@ -18,14 +18,14 @@
 
 - name: Apply the kerberos role to the image
   hosts: kerberos-kdc
-  any_errors_fatal: yes
+  any_errors_fatal: true
   become: yes
   roles:
     - openstack-kerberos
 
 - name: Apply the MySQL role to the image
   hosts: bdd
-  any_errors_fatal: yes
+  any_errors_fatal: true
   become: yes
   pre_tasks:
     - name: Include MySQL vars
