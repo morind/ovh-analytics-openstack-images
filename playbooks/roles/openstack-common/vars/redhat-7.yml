@@ -24,12 +24,11 @@ packages:
   - curl
   - wget
   - xfsprogs
-  - krb5-workstation
-  - krb5-libs
-  - nss-pam-ldapd
-  - pam_ldap
-  - nscd
-  - autofs
+  - freeipa-client
+  - oddjob
+  - oddjob-mkhomedir
+  - lvm2
+  - rsync
 
 update_grub: 'cd && grub2-mkconfig -o "$(readlink -n /etc/grub2.cfg)"'
 

@@ -30,17 +30,24 @@
     - MySQL-python
     - ambari-server
     - ambari-agent
-    - mysql
   notify: Reload systemd
 
 - meta: flush_handlers
 
-- name: Configure the Ambari agent
-  lineinfile:
-    dest: /etc/ambari-agent/conf/ambari-agent.ini
-    regexp: '^hostname\s*='
-    line: "hostname=localhost"
-    state: present
+- name: Configure the Ambari hostname
+  ini_file:
+    path: /etc/ambari-agent/conf/ambari-agent.ini
+    section: server
+    option: hostname
+    value: localhost
+  notify: Restart ambari-agent
+
+- name: Configure the Ambari TLS version
+  ini_file:
+    path: /etc/ambari-agent/conf/ambari-agent.ini
+    section: security
+    option: force_https_protocol
+    value: PROTOCOL_TLSv1_2
   notify: Restart ambari-agent
 
 - name: Run Ambari Server setup

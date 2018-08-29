@@ -20,6 +20,7 @@ PGP_SIGN_ID=70AD8BDB78DEBD72
 PGP_VERI_ID=44A31488B9BA649C3876C6F070AD8BDB78DEBD72
 
 # Pgp key passphrase file
+echo ${GPG_PASS} > "${BASEDIR}/.gpg.passphrase"
 PGP_KEY_PASSPHRASE_FILE=${BASEDIR}/.gpg.passphrase
 
 # The openstack region where to create the swift container

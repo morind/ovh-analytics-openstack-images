@@ -3,6 +3,7 @@
   hosts: common
   any_errors_fatal: true
   become: yes
+  become_user: root
   roles:
     - openstack-common
 
@@ -10,23 +11,26 @@
   hosts: hadoop-cluster
   any_errors_fatal: true
   become: yes
+  become_user: root
   pre_tasks:
     - name: Include Analytics vars
       include_vars: group_vars/analytics
   roles:
     - openstack-ambari
 
-- name: Apply the kerberos role to the image
-  hosts: kerberos-kdc
+- name: Apply the ipa-server role to the image
+  hosts: ipa-server
   any_errors_fatal: true
   become: yes
+  become_user: root
   roles:
-    - openstack-kerberos
+    - openstack-ipa
 
 - name: Apply the MySQL role to the image
   hosts: bdd
   any_errors_fatal: true
   become: yes
+  become_user: root
   pre_tasks:
     - name: Include MySQL vars
       include_vars: group_vars/mysql
@@ -36,6 +40,7 @@
 - name: Apply Guacamole role to guacamole node
   hosts: guacamole
   become: yes
+  become_user: root
   pre_tasks:
     - name: include guacamole vars
       include_vars: group_vars/guacamole

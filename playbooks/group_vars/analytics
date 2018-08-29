@@ -1,6 +1,6 @@
 ---
 hdp_version: '2.6'
-ambari_version: '2.6.2.0'
+ambari_version: '2.6.2.2'
 wait: true
 wait_timeout: 3600   # 60 minutes
 

@@ -1,9 +1,12 @@
 ---
-- name: Install krb5-server
-  yum:
-    name: "krb5-server"
-    update_cache: yes
-    state: installed
+- name: Install required packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rng-tools
+    - ipa-server
+    - ipa-server-dns
 
 - name: Install rng-tools
   yum:
@@ -18,3 +21,8 @@
     state: present
     create: yes
 
+- name: Activate and enable rngd
+  service:
+    name: rngd
+    state: started
+    enabled: yes

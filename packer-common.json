@@ -23,6 +23,7 @@
       "groups": [
         "common"
       ],
+      "user": "centos",
       "extra_arguments": [
         "--timeout",
         "60"
@@ -37,7 +38,7 @@
       "ssh_username": "centos",
       "image_name": "{{user `image_name`}}",
       "source_image_name": "Centos 7",
-      "flavor": "b2-7",
+      "flavor": "s1-4",
       "region": "{{user `region`}}",
       "identity_endpoint": "{{user `identity_endpoint`}}",
       "tenant_id": "{{user `tenant_id`}}",
