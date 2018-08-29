@@ -7,7 +7,7 @@
     "region": "{{env `OS_REGION_NAME`}}",
     "network_id": "{{env `PACKER_NETWORK_ID`}}",
     "image_name": "Analytics MySQL",
-    "source_image": "c8f5ee12-dc96-4e02-af1f-23ff569ab92a",
+    "source_image": "",
     "version": "dev",
     "commit": ""
   },
