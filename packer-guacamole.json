@@ -7,7 +7,7 @@
     "region": "{{env `OS_REGION_NAME`}}",
     "network_id": "{{env `PACKER_NETWORK_ID`}}",
     "image_name": "Analytics Guacamole",
-    "source_image": "",
+    "source_image": "c8f5ee12-dc96-4e02-af1f-23ff569ab92a",
     "version": "dev",
     "commit": ""
   },
@@ -24,6 +24,7 @@
       "groups": [
         "guacamole"
       ],
+      "user": "centos",
       "extra_arguments": [
         "--timeout",
         "60"
@@ -38,7 +39,7 @@
       "ssh_username": "centos",
       "image_name": "{{user `image_name`}}",
       "source_image": "{{user `source_image`}}",
-      "flavor": "b2-7",
+      "flavor": "s1-4",
       "region": "{{user `region`}}",
       "identity_endpoint": "{{user `identity_endpoint`}}",
       "tenant_id": "{{user `tenant_id`}}",

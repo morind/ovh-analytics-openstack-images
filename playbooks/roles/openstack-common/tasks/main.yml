@@ -92,7 +92,6 @@
   with_items: "{{ grep_result.stdout_lines | default('') }}"
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "6"
 
-
 - name: Disable Transparent Huge Pages in Grub 2
   lineinfile: dest=/etc/default/grub
               state=present
@@ -115,70 +114,3 @@
   notify: Run resolvconf
 
 - meta: flush_handlers
-
-- name: Include partitioning.yml
-  include: partitioning.yml
-  with_flattened:
-    - "{{ namenode_disk|default([]) }}"
-    - "{{ masterservices_disk|default([]) }}"
-    - "{{ hadoop_disk|default([]) }}"
-    - "{{ datanode_disks|default([]) }}"
-    - "{{ mysql_disks|default([]) }}"
-
-- name: Mount hadoop disk under /hadoop
-  mount: state=mounted
-         src="/dev/{{ hadoop_disk }}1"
-         name="/hadoop"
-         fstype="{{ data_disks_filesystem }}"
-         opts=defaults,noatime
-         dump=0
-         passno=0
-  when: hadoop_disk is defined and hadoop_disk and ansible_devices[hadoop_disk] is defined
-
-- name: Mount namenode disk under /hadoop/nn
-  mount: state=mounted
-         src="/dev/{{ namenode_disk }}1"
-         name="/hadoop/nn"
-         fstype="{{ data_disks_filesystem }}"
-         opts=defaults,noatime
-         dump=0
-         passno=0
-  when: namenode_disk is defined and namenode_disk and ansible_devices[namenode_disk] is defined
-
-- name: Mount master services disk under /hadoop/ms
-  mount: state=mounted
-         src="/dev/{{ masterservices_disk }}1"
-         name="/hadoop/ms"
-         fstype="{{ data_disks_filesystem }}"
-         opts=defaults,noatime
-         dump=0
-         passno=0
-  when: masterservices_disk is defined and masterservices_disk and ansible_devices[masterservices_disk] is defined
-
-- name: create mysql mount
-  file: name=/var/lib/mysql state=directory
-  when: mysql_disk is defined and mysql_disk and ansible_devices[mysql_disk] is defined
-
-- name: Mount mysql services disk under /var/lib/mysql
-  mount: state=mounted
-         src="/dev/{{ mysql_disk }}1"
-         name="/var/lib/mysql/"
-         fstype="{{ data_disks_filesystem }}"
-         opts=defaults,noatime
-         dump=0
-         passno=0
-  when: mysql_disk is defined and mysql_disk and ansible_devices[mysql_disk] is defined
-
-- name: Mount datanode disks under /grid/{0..n}
-  mount: state=mounted
-         src="/dev/{{ item.1 }}1"
-         name="/grid/{{ item.0 }}"
-         fstype="{{ data_disks_filesystem }}"
-         opts=defaults,noatime
-         dump=0
-         passno=0
-  with_indexed_items: "{{ datanode_disks|default([]) }}"
-  when: datanode_disks is defined and datanode_disks and ansible_devices[item.1] is defined
-
-- include: unbound-dns.yml
-  when: use_dns

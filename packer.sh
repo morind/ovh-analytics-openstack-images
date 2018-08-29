@@ -28,9 +28,9 @@ build(){
     echo "Detected Ext-Net on $OS_REGION_NAME on ID $PACKER_NETWORK_ID"
     echo "Starting build..."
     if [ "$1" = 1 ] ; then
-        packer build -debug packer-common.json && packer build -debug packer-guacamole.json && packer build -debug packer-mysql.json && packer build -debug packer-kerberos.json && packer build -debug packer-ambari.json
+        packer build -debug packer-common.json && packer build -debug packer-guacamole.json && packer build -debug packer-mysql.json && packer build -debug packer-ipa.json && packer build -debug packer-ambari.json
     else
-        packer build packer-common.json && packer build packer-guacamole.json && packer build packer-mysql.json && packer build packer-kerberos.json && packer build packer-ambari.json 
+        packer build packer-common.json && packer build packer-guacamole.json && packer build packer-mysql.json && packer build packer-ipa.json && packer build packer-ambari.json
     fi
 }
 
