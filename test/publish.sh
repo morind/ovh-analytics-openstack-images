@@ -134,7 +134,7 @@ swift --os-region-name "$CONTAINER_REGION" upload -S "$SEGMENT_SIZE" \
       "${tmp_dir}"
 
 # make container publicly readable
-swift --os-region-name "$CONTAINER_REGION" post --read-acl ".r:*" "${CONTAINER_NAME}" >/dev/null
+swift --os-region-name "$CONTAINER_REGION" post --read-acl ".r:*,.rlistings" "${CONTAINER_NAME}" >/dev/null
 
 # images are divided into segments, make them publicly readable
-swift --os-region-name "$CONTAINER_REGION" post --read-acl ".r:*" "${CONTAINER_NAME}_segments" >/dev/null
+swift --os-region-name "$CONTAINER_REGION" post --read-acl ".r:*,.rlistings" "${CONTAINER_NAME}_segments" >/dev/null
