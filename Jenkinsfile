@@ -43,37 +43,45 @@ pipeline {
             }
         }
         stage('Build Guacamole image') {
-            anyOf{
+            when{
+              anyOf{
                   branch 'master';
                   branch 'development';
               }
+            }
             steps {
                 sh 'test/run.sh packer-guacamole.json $OS_REGION_NAME'
             }
         }
         stage('Build IPA image') {
-            anyOf{
+            when{
+              anyOf{
                   branch 'master';
                   branch 'development';
               }
+            }
             steps {
                 sh 'test/run.sh packer-ipa.json $OS_REGION_NAME'
             }
         }
         stage('Build MySQL image') {
-            anyOf{
+            when{
+              anyOf{
                   branch 'master';
                   branch 'development';
               }
+            }
             steps {
                 sh 'test/run.sh packer-mysql.json $OS_REGION_NAME'
             }
         }
         stage('Build Ambari image') {
-            anyOf{
+            when{
+              anyOf{
                   branch 'master';
                   branch 'development';
               }
+            }
             steps {
                 sh 'test/run.sh packer-ambari.json $OS_REGION_NAME'
             }
