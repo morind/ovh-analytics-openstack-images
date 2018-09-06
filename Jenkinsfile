@@ -31,48 +31,62 @@ pipeline {
               sh 'gpg --import .ovh.ci.gpg'
             }
         }
-        stage('Build and publish common image') {
+        stage('Build common image') {
             when{
-                branch 'master'
+              anyOf{
+                  branch 'master';
+                  branch 'development';
+              }
             }
             steps {
                 sh 'test/run.sh packer-common.json $OS_REGION_NAME'
-                sh 'test/publish.sh packer-common.json $OS_REGION_NAME'
             }
         }
-        stage('Build and publish Guacamole image') {
-            when{
-                branch 'master'
-            }
+        stage('Build Guacamole image') {
+            anyOf{
+                  branch 'master';
+                  branch 'development';
+              }
             steps {
                 sh 'test/run.sh packer-guacamole.json $OS_REGION_NAME'
-                sh 'test/publish.sh packer-guacamole.json $OS_REGION_NAME'
             }
         }
-        stage('Build and publish IPA image') {
-            when{
-                branch 'master'
-            }
+        stage('Build IPA image') {
+            anyOf{
+                  branch 'master';
+                  branch 'development';
+              }
             steps {
                 sh 'test/run.sh packer-ipa.json $OS_REGION_NAME'
-                sh 'test/publish.sh packer-ipa.json $OS_REGION_NAME'
             }
         }
-        stage('Build and publish MySQL image') {
-            when{
-                branch 'master'
-            }
+        stage('Build MySQL image') {
+            anyOf{
+                  branch 'master';
+                  branch 'development';
+              }
             steps {
                 sh 'test/run.sh packer-mysql.json $OS_REGION_NAME'
-                sh 'test/publish.sh packer-mysql.json $OS_REGION_NAME'
             }
         }
-        stage('Build and publish Ambari image') {
+        stage('Build Ambari image') {
+            anyOf{
+                  branch 'master';
+                  branch 'development';
+              }
+            steps {
+                sh 'test/run.sh packer-ambari.json $OS_REGION_NAME'
+            }
+        }
+        stage('Publish images'){
             when{
                 branch 'master'
             }
             steps {
-                sh 'test/run.sh packer-ambari.json $OS_REGION_NAME'
+                sh 'test/publish.sh packer-common.json $OS_REGION_NAME'
+                sh 'test/publish.sh packer-guacamole.json $OS_REGION_NAME'
+                sh 'test/publish.sh packer-ipa.json $OS_REGION_NAME'
+                sh 'test/publish.sh packer-mysql.json $OS_REGION_NAME'
                 sh 'test/publish.sh packer-ambari.json $OS_REGION_NAME'
             }
         }
